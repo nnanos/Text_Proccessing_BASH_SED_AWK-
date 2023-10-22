@@ -1,44 +1,85 @@
 =======================================================================
-Experiments in Music Source Separation
+Text Proccessing with SED and AWK tools
 =======================================================================
 
 Description
 ============
-This repository contains some scripts that I wrote within my undergraduate thesis in order to do some experiments in the problem of
-music source separation. I had inspired by the scripts implemented in the `Open unmix source separation library <https://github.com/sigsep/open-unmix-pytorch.git>`_ but I wanted to test my own Front Ends and with fewer processing time . 
 
+This repository contains a BASH shell script that I implemented to manage a user log file
+events (log files) for navigating social networks on the Internet. The file event.dat contains elements according to
+the following wording and formatting:
 
-* What differantiates the scripts implemented in this repository from the ones in the  `Open unmix library <https://github.com/sigsep/open-unmix-pytorch.git>`_ :
-
-        * The spectrograms are precomputed and are of fixed duration (controlled by the param seq-dur) and not computed at training time . This change was           made in order to add the capabillity of experimenting with different front ends other than Pytorch's. For example it is possible to use the front           ends provided by  `this <https://github.com/nnanos/Time_Frequency_Analysis.git>`_ Time frequency analysis-synthesis toolbox which is also                   implemented within this thesis.
-          In fact the possibillities for the different Front Ends are:
-                   #. `scipy.signal.stft <https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.stft.html>`_
-                   #. `librosa.stft <https://librosa.org/doc/main/generated/librosa.stft.html/>`_
-                   #. `nsgt grrrr <https://github.com/grrrr/nsgt>`_                   
-                   #. `Time-Frequency Analysis-Synthesis Toolbox <https://github.com/nnanos/Time_Frequency_Analysis>`_  (implemented within this thesis)                                    
-        
-
-        * It is possible to change the sampling rate of the songs of the dataset for faster processing.
-        
-
-        * Training is done with a U-Net model as described in 
-          `this <https://www.semanticscholar.org/paper/Singing-Voice-Separation-with-Deep-U-Net-Networks-Jansson-Humphrey                                             /83ea11b45cba0fc7ee5d60f608edae9c1443861d>`_ . paper. But there is still freedom to change the model by changing appropriately the model.py                 module.
-          
-        * Validation and Evaluation is done exactly as in training that is in a block-processing manner.
-        
-        * I don't use the `musdb <https://github.com/sigsep/sigsep-mus-db>`_ parser so there are no source-augmentations.
-        
-        * The separation is done in the single channel therefore for the computation of the evaluation metrics we use other evaluation methods than the               basic one (`museval.eval_mus_track <https://sigsep.github.io/sigsep-mus-eval/>`_) which is used only for stereo estimates.
-          In fact the possibillities for the different evaluation methods are:
-                   #. `mir_eval.separation.bss_eval_sources <https://craffel.github.io/mir_eval/>`_
-                   #. `museval.evaluate <https://sigsep.github.io/sigsep-mus-eval/>`_
-                   #. BSS_eval_custom   (also implemented within this thesis)
-        
-
-    
+id|lastName|firstName|gender|birthday|joinDate|IP|browserUsed|socialmedia
 
 
 
+The script tools.sh support the following functionallities:
+                    
+              #. Execution of the command: ::
+
+                     ./tool.sh -f <file>
+
+                 Displays the entire contents of the file, without the comment lines that should
+                 have been ignored.
+              
+              #. Execution of the command: ::
+
+                     ./tool.sh -f <file> -id <id>
+
+                 Displays the first name, last name, and date of birth of the user with the given one
+                 id, separated by a single space.
+
+
+              #. Execution of the command: ::
+
+                     ./tool.sh --firstnames -f <file>
+
+                 Displays all distinct first names (firstname field) contained in the file,
+                 in alphabetical order.
+
+
+              #. Execution of the command: ::
+
+                     ./tool.sh --lastnames -f <file>
+                    
+                 Displays all distinct first names (lasttname field) contained in the file,
+                 in alphabetical order.
+
+
+              #. Execution of the command: ::
+
+                     ./tool.sh --born-since <dateA> --born-until <dateB> -f <file>
+                     
+                 Displays only the rows that correspond to users born from
+                 date dateA to date dateB. Either can be given, eg, to display all users born on a day or                         later, or born until some day. For each user that meets the criteria, be displayed
+                 the line exactly as it was in the file. Obviously they won't be included
+                 comments.
+
+
+
+
+              #. Execution of the command: ::
+
+                     ./tool.sh --socialmedia -f <file>
+                     
+                 Displays all social media (social media) used by
+                 users, in alphabetical order, and next to the mention of his name
+                 social network will show the number of users who used it (with
+                 exactly one space to separate).
+
+
+
+
+              #. Execution of the command: ::
+
+                     ./tool.sh -f <file> --edit <id> <column> <value>
+                     
+                 Modifys the file. Specifically, for the user with code <id>, it will replace the
+                 column <column> with value <value>. If there is no user with this id, or
+                 column is not among the accepted columns 2 through 8 (column 1 corresponding to the same
+                 id is not allowed to change), this command will not change anything. Beyond the
+                 requested change, nothing else should be changed, i.e. it should
+                 the original sorting of records including comments is preserved.
 
 
 
@@ -46,9 +87,51 @@ music source separation. I had inspired by the scripts implemented in the `Open 
 
 ============
 
-Usage
+Testing the Tool
 =============
 
+I now present some examples of execution.
+
+
+              #. Execution of the command: ::
+
+                    ./tool.sh -f event.dat
+
+                .. image:: Folder_structure.png
+              
+              #. Execution of the command: ::
+
+                     ./tool.sh -f event.dat -id 1099511629352
+
+
+
+              #. Execution of the command: ::
+
+                     ./tool.sh --firstnames -f event.dat | head
+
+
+
+              #. Execution of the command: ::
+
+                     ./tool.sh --lastnames -f event.dat | head
+                    
+
+
+              #. Execution of the command: ::
+
+                     ./tool.sh --born-since 1989-12-03 --born-until 1990-01-09 -f event.dat | head
+
+
+
+              #. Execution of the command: ::
+
+                     ./tool_386361_.sh --socialmedia -f event.dat
+                     
+
+              #. Execution of the command: ::
+
+                     ./tool_386361_.sh -f event.dat --edit 1099511629352 firstName NUNEZ
+                     
 
 #. PREPARE THE DATA-----------------------------------------------------------------------------------------
 
