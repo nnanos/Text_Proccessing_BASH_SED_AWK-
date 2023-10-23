@@ -31,13 +31,13 @@ print_file()
 print_firstnames()
 {    
      #vriskw ta prwta onomata kai ta taksinomw 	
-       grep -E -o '\|[[:alpha:]]+\|' ${args[2]} | sed 's/|//g'| sort       
+       grep -E -o '\|[[:alpha:]]+\|' ${args[2]} | sed 's/|//g'| sort  | uniq     
 }
 
 print_lastnames()
 {
 	#vriskw ta epwnuma kai ta taksinomw
-        grep -E -o '\|[[:alpha:]]+\|[[:alpha:]]+\|' ${args[2]}  |  grep -E -o '\|[[:alpha:]]+\|$'   | sed 's/|//g'  | sort	
+        grep -E -o '\|[[:alpha:]]+\|[[:alpha:]]+\|' ${args[2]}  |  grep -E -o '\|[[:alpha:]]+\|$'   | sed 's/|//g'  | sort	| uniq
 }
 
 print_people_since_until()
@@ -62,9 +62,7 @@ print_socialmedia()
 
 column_change()
 {
-		awk -v id="${args[3]}" -v column="${args[4]}" -v value="${args[5]}" 
-			-f changeColumn.awk  "${args[1]}" 
-			> tmpfile && mv tmpfile "${args[1]}"
+		awk -v id="${args[3]}" -v column="${args[4]}" -v value="${args[5]}" -f changeColumn.awk  "${args[1]}" > tmpfile && mv tmpfile "${args[1]}"
 		
 }
 if [[ $# == 0 ]];then     #h sunthikh elegxei an exw arguments
