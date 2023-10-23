@@ -93,48 +93,53 @@ Testing the Tool
 I now present some examples of execution.
 
 
-              #. Execution of the command: ::
+              * Execution of the command: ::
 
                     ./tool.sh -f event.dat
 
-                .. image:: Folder_structure.png
+
+                .. image:: /Images/1.png
               
-              #. Execution of the command: ::
+              
+              * Execution of the command: ::
 
                      ./tool.sh -f event.dat -id 1099511629352
 
-                .. image:: Folder_structure.png
+                .. image:: /Images/2.png
 
-              #. Execution of the command: ::
+              
+              * Execution of the command: ::
 
                      ./tool.sh --firstnames -f event.dat | head
 
+                .. image:: /Images/3.png
 
 
-              #. Execution of the command: ::
+              * Execution of the command: ::
 
                      ./tool.sh --lastnames -f event.dat | head
-                    
+
+                .. image:: /Images/4.png
 
 
-              #. Execution of the command: ::
+              * Execution of the command: ::
 
                      ./tool.sh --born-since 1989-12-03 --born-until 1990-01-09 -f event.dat | head
 
-                 .. image:: Folder_structure.png
+                .. image:: /Images/5.png
 
 
-              #. Execution of the command: ::
+              * Execution of the command: ::
 
                      ./tool.sh --socialmedia -f event.dat
 
-                  .. image:: Folder_structure.png
+                .. image:: /Images/6.png
 
-              #. Execution of the command: ::
+              * Execution of the command: ::
 
                      ./tool.sh -f event.dat --edit 1099511629352 firstName NUNEZ
 
-                  .. image:: Folder_structure.png
+              .. image:: /Images/7.png
                      
 
 
